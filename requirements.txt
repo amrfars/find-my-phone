@@ -1,0 +1,4 @@
+kivy==2.3.0
+SpeechRecognition==3.10.0
+PyAudio==0.2.14
+pyjnius==1.6.0
