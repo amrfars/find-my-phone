@@ -16,7 +16,7 @@ source.dir = .
 version = 1.0.0
 
 # (list) Application requirements
-requirements = python3,kivy==2.3.0,speechrecognition,pyjnius,pyaudio
+requirements = python3,kivy==2.3.0,speechrecognition,pyjnius,cython
 
 # (str) Presplash image
 presplash.filename = %(source.dir)s/presplash.png
