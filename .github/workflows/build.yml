@@ -12,9 +12,16 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip python3-venv zip unzip openjdk-17-jdk
+        pip3 install --upgrade pip setuptools
+    
     - name: Build with Buildozer
-      uses: ArtemSBulgakov/buildozer-action@v1
-      id: buildozer
+      run: |
+        pip3 install buildozer cython virtualenv
+        buildozer android debug
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
