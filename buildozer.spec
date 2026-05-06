@@ -39,6 +39,9 @@ services = listen_service:service.py:foreground
 # (bool) Stay awake
 android.wakelock = True
 
+# (bool) Accept Android SDK license automatically
+android.accept_sdk_license = True
+
 # (str) Android API level
 android.api = 33
 

@@ -17,14 +17,23 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y python3-pip python3-venv zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev libltdl-dev
         pip3 install --upgrade pip setuptools
+        pip3 install buildozer cython virtualenv
     
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-    
-    - name: Build with Buildozer
+    - name: Accept Android SDK Licenses
       run: |
         export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-        pip3 install buildozer cython virtualenv
+        # Pre-accept all licenses by creating the license files
+        mkdir -p ~/.android
+        touch ~/.android/repositories.cfg
+        # Let buildozer download SDK first, then accept licenses
+        buildozer android debug || true
+        # Accept all SDK licenses
+        yes | $HOME/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses 2>/dev/null || true
+        yes | $HOME/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager --licenses 2>/dev/null || true
+    
+    - name: Build APK
+      run: |
+        export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
         buildozer android debug
     
     - name: Upload APK
